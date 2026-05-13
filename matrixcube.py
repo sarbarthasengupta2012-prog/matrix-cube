@@ -53,6 +53,30 @@ def multiply(matrix_a, matrix_b):
 
     return result
 
+
+def decideColor():
+    return f'#{random.randint(0, 0xFFFFFF):06x}'
+
+def update(rotx, roty, rotz):
+    canvas.delete("all")
+
+    cube.rotate(rotx, roty, rotz)
+
+    offset_x = 500
+    offset_y = 200
+
+    color = decideColor()
+
+    for edge in cube.connections:
+        p1 = cube.vector[edge[0]]
+        p2 = cube.vector[edge[1]]
+
+        canvas.create_line(p1[0] + offset_x, p1[1] + offset_y,
+                           p2[0] + offset_x, p2[1] + offset_y,
+                           fill=color, width=2)
+
+    root.after(20, update, rotx, roty, rotz)
+
 root = tk.Tk()
 root.title("adminDatabase")
 canvas = tk.Canvas(root, width=1000, height=400, bg="black")
